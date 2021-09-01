@@ -6,7 +6,6 @@ const serverlessConfiguration: AwsConfig.Serverless = {
   service: 'dojo-serverless-backend',
   frameworkVersion: '>=1.83',
   plugins: ['serverless-webpack', 'serverless-step-functions'],
-  configValidationMode: 'error',
   provider: {
     name: 'aws',
     runtime: 'nodejs10.x',
@@ -33,6 +32,35 @@ const serverlessConfiguration: AwsConfig.Serverless = {
           http: {
             method: 'get',
             path: 'hello',
+            cors: true,
+          },
+        },
+      ],
+    },
+    getVirus: {
+      handler: 'src/handlers/virus/get.main',
+      events: [
+        {
+          http: {
+            method: 'get',
+            path: 'virus',
+            cors: true,
+          },
+        },
+      ],
+    },
+    createVirus: {
+      handler: 'src/handlers/virus/create.main',
+      events: [
+        /*         {
+          schedule: 'rate(1 minute)',
+          je l'ai commentée car sinon elle va tourner
+          tout le temps
+        }, */
+        {
+          http: {
+            method: 'post', // pour l'instant elle ne poste rien dans la session 1
+            path: 'virus',
             cors: true,
           },
         },
